@@ -1,0 +1,51 @@
+<mat-vertical-stepper [linear]="false" #stepper [animationDuration]="'1000'">
+    <mat-step [stepControl]="firstFormGroup">
+        <ng-template matStepLabel i18n>בחירת שחקנים</ng-template>
+        <div class="pt-2">
+            <app-lineup [draw]="draw"></app-lineup>
+        </div>
+      
+        <div>
+            <button mat-button matStepperNext i18n>הבא</button>
+        </div>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+        <ng-template matStepLabel>אפשרויות</ng-template>
+        <div class="draw-settings pt-2">
+            <mat-form-field>
+                <mat-label i18n>מספר קבוצות</mat-label>
+                <input matInput type="number" placeholder="מספר קבוצות" [(ngModel)]="draw.numberOfTeams" required>
+            </mat-form-field>
+    
+            <mat-form-field>
+                <mat-label i18n>מספר הרצות</mat-label>
+                <input matInput type="number" placeholder="מספר הרצות" [(ngModel)]="draw.numberOfRepetitions" required>
+            </mat-form-field>
+        </div>
+
+        <div>
+            <button mat-button matStepperPrevious i18n>קודם</button>
+            <button mat-button matStepperNext i18n>הבא</button>
+        </div>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel i18n>קבוצות</ng-template>
+        @if(sending()){
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        }
+        <div class="pt-2">
+            <div class="draw-buttons">
+                <button mat-button (click)="draw.generateTeams()" i18n>צור קבוצות</button>
+                @if(draw.teams.length > 0){
+                <button mat-button (click)="saveDraw()" i18n>שמור להיסטוריה</button>
+                }
+            </div>
+
+
+            <div class="teams-container">
+                <app-draw-result [draw]="draw"></app-draw-result>
+            </div>
+
+        </div>
+    </mat-step>
+</mat-vertical-stepper>

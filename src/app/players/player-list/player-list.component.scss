@@ -1,0 +1,58 @@
+table {
+    width: 100%;
+    background-color: var(--app-primary-100);
+}
+
+.mat-mdc-form-field {
+    font-size: 14px;
+    width: auto;
+}
+
+td,
+th {
+    width: auto;
+}
+
+.players-container {
+    padding: 1rem;
+}
+
+
+
+.actions {
+    min-width: 130px;
+    width: 130px;
+}
+
+.players-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+    .actions {
+        display: flex;
+        flex-direction: row;
+        width: auto;
+        gap: 1rem;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+
+    td,
+    th {
+        width: 33.33333%;
+    }
+
+    .players-header {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+    }
+    .actions {
+        order: -1;
+    }
+}

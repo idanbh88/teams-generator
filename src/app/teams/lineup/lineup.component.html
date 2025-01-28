@@ -1,0 +1,33 @@
+<div class="lineup-header">
+    <mat-form-field  class="example-full-width">
+        <mat-label i18n>שם השחקן</mat-label>
+        <input type="text"
+               placeholder="בחר שם"
+               aria-label="Number"
+               matInput
+               [matChipInputFor]="reactiveChipGrid"
+               [formControl]="control"
+               [matAutocomplete]="auto">
+        <mat-autocomplete (optionSelected)="selected($event)" autoActiveFirstOption #auto="matAutocomplete">
+          @for (option of filteredOptions | async; track option) {
+            <mat-option [value]="option">{{option.name}}</mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <h5 class="players-amount">
+        {{draw()?.players?.length}} שחקנים
+      </h5>
+</div>
+
+
+  <mat-chip-grid #reactiveChipGrid aria-label="Enter reactive form keywords" [formControl]="lineupControl">
+    @for (player of draw()?.players; track player) {
+      <mat-chip-row (removed)="draw()?.removePlayer(player)">
+        {{player.name}}
+      <button matChipRemove>
+        <mat-icon>cancel</mat-icon>
+      </button>
+      </mat-chip-row>
+    }
+    </mat-chip-grid>

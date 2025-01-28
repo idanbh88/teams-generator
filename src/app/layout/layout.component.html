@@ -1,0 +1,34 @@
+<div class="example-container" [class.example-is-mobile]="isMobile()">
+    <mat-toolbar class="app-toolbar">
+      <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+      <div class="app-toolbar-content">
+        <h1 routerLink="" class="app-name">שני ושישי</h1>
+        <mat-icon routerLink="">sports_soccer</mat-icon>
+      </div>
+    </mat-toolbar>
+
+    <mat-sidenav-container [hasBackdrop]="true" class="example-sidenav-container"
+                       >
+      <mat-sidenav class="app-sidenav" #snav [mode]="isMobile() ? 'over' : 'side'"
+                  [fixedInViewport]="isMobile()" fixedTopGap="56">
+        <mat-nav-list class="app-sidenav-list">
+          <div class="app-link">
+            <h3 (click)="snav.close()" i18n="players nav item" mat-list-item routerLink="players">שחקנים</h3>
+            <mat-icon>list</mat-icon>
+          </div>  
+          <div class="app-link">
+            <h3 (click)="snav.close()" i18n="players nav item" mat-list-item routerLink="teams">קבוצות</h3>
+            <mat-icon>groups</mat-icon>
+          </div>
+        </mat-nav-list>
+      </mat-sidenav>
+
+      <mat-sidenav-content class="content">
+        <router-outlet></router-outlet>
+        <div class="powered-by">
+            <span>Powered by Idan Ben Haim</span>
+            
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>

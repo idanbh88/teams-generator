@@ -1,0 +1,160 @@
+@use '@angular/material' as mat;
+@use "sass:map";
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+@mixin generateColors($prefix, $palette) {
+
+    $colors-map: (
+    );
+
+@each $key,
+$value in $palette {
+    @if $key ==secondary or $key ==neutral or $key ==neutral-variant or $key ==error {
+        @include generateColors($key, $value);
+    }
+
+    @else {
+        .app-#{$prefix}-#{$key} {
+            color: map.get($palette, $key);
+        }
+
+        ;
+
+        .app-bg-#{$prefix}-#{$key} {
+            background-color: map.get($palette, $key);
+        }
+
+        ;
+
+        $map: (
+        );
+    $map: map.merge($map, ($key: $value));
+    $colors-map: map.merge($colors-map, $map);
+}
+}
+
+:root {
+
+    @each $key,
+    $value in $colors-map {
+        --app-#{$prefix}-#{$key}: #{$value};
+    }
+}
+}
+
+@mixin generate-material-classes($app-primary, $app-tertiary) {
+    @include generateColors(primary, $app-primary);
+    @include generateColors(accent, $app-tertiary);
+}
+
+
+
+// Generate width classes from w-1 to w-100 using percentages
+@mixin generate-width-classes() {
+    @for $i from 1 through 100 {
+        .w-#{$i} {
+            width: #{$i * 1%};
+        }
+    }
+}
+
+// Generate padding and margin classes from 1 to 6 using rem values
+@mixin generate-spacing-classes() {
+    @for $i from 1 through 6 {
+
+        // Padding classes
+        .p-#{$i} {
+            padding: #{$i * 0.25}rem;
+        }
+
+        .pt-#{$i} {
+            padding-top: #{$i * 0.25}rem;
+        }
+
+        .pe-#{$i} {
+            padding-inline-end: #{$i * 0.25}rem;
+        }
+
+        .pb-#{$i} {
+            padding-bottom: #{$i * 0.25}rem;
+        }
+
+        .ps-#{$i} {
+            padding-inline-start: #{$i * 0.25}rem;
+        }
+
+        .px-#{$i} {
+            padding-inline-start: #{$i * 0.25}rem;
+            padding-inline-end: #{$i * 0.25}rem;
+        }
+
+        .py-#{$i} {
+            padding-top: #{$i * 0.25}rem;
+            padding-bottom: #{$i * 0.25}rem;
+        }
+
+        // Margin classes
+        .m-#{$i} {
+            margin: #{$i * 0.25}rem;
+        }
+
+        .mt-#{$i} {
+            margin-top: #{$i * 0.25}rem;
+        }
+
+        .me-#{$i} {
+            margin-inline-end: #{$i * 0.25}rem;
+        }
+
+        .mb-#{$i} {
+            margin-bottom: #{$i * 0.25}rem;
+        }
+
+        .ms-#{$i} {
+            margin-inline-start: #{$i * 0.25}rem;
+        }
+
+        .mx-#{$i} {
+            margin-inline-start: #{$i * 0.25}rem;
+            margin-inline-end: #{$i * 0.25}rem;
+        }
+
+        .my-#{$i} {
+            margin-top: #{$i * 0.25}rem;
+            margin-bottom: #{$i * 0.25}rem;
+        }
+    }
+}
+
+@mixin create-theme($app-primary, $app-tertiary) {
+
+
+
+    @include generate-material-classes($app-primary, $app-tertiary);
+    @include generate-spacing-classes();
+    @include generate-width-classes();
+}
+
+$app-primary: mat.$azure-palette;
+$app-tertiary: mat.$blue-palette;
+@include create-theme($app-primary, $app-tertiary);
+
+.edit-player .mat-mdc-form-field-infix {
+    width: auto !important; 
+    min-width: 80px;
+ }
+
+ .edit-player-skill .mat-mdc-form-field-infix {
+    width: auto !important; 
+    min-width: 40px;
+ }
