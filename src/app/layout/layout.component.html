@@ -12,12 +12,12 @@
       <mat-sidenav class="app-sidenav" #snav [mode]="isMobile() ? 'over' : 'side'"
                   [fixedInViewport]="isMobile()" fixedTopGap="56">
         <mat-nav-list class="app-sidenav-list">
-          <div class="app-link">
-            <h3 (click)="snav.close()" i18n="players nav item" mat-list-item routerLink="players">שחקנים</h3>
+          <div (click)="snav.close()" routerLink="players" class="app-link">
+            <h3  i18n="players nav item" mat-list-item >שחקנים</h3>
             <mat-icon>list</mat-icon>
           </div>  
-          <div class="app-link">
-            <h3 (click)="snav.close()" i18n="players nav item" mat-list-item routerLink="teams">קבוצות</h3>
+          <div (click)="snav.close()" routerLink="teams" class="app-link">
+            <h3  i18n="players nav item" mat-list-item >קבוצות</h3>
             <mat-icon>groups</mat-icon>
           </div>
         </mat-nav-list>
