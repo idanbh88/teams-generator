@@ -10,6 +10,8 @@ import { DrawService } from '../../core/services/draw.service';
 import { DrawResultComponent } from "../draw-result/draw-result.component";
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-teams-home',
@@ -23,7 +25,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     LineupComponent,
     DrawResultComponent,
     MatProgressBarModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    CommonModule 
   ],
   templateUrl: './teams-home.component.html',
   styleUrl: './teams-home.component.scss'
@@ -35,6 +38,7 @@ export class TeamsHomeComponent {
   private _formBuilder = inject(FormBuilder);
   firstFormGroup: FormGroup = this._formBuilder.group({ firstCtrl: [''] });
   secondFormGroup: FormGroup = this._formBuilder.group({ secondCtrl: [''] });
+  public showAnimation = false;
 
   public get draw(): Draw {
     return this.drawService.draw;
@@ -56,5 +60,14 @@ export class TeamsHomeComponent {
         this.sending.set(false);
       },
     });
+  }
+
+  public generateTeams(): void {
+    this.showAnimation = true;
+    this.drawService.generateDraw();
+    setTimeout(() => {
+      this.showAnimation = false;
+    }, 1000);
+   
   }
 }

@@ -37,15 +37,14 @@
             <div class="draw-buttons">
 
                 @if(draw.teams.length > 0){
-                <button mat-button (click)="draw.generateTeams()" i18n>צור קבוצות מחדש</button>
+                <button mat-button (click)="generateTeams()" i18n>צור קבוצות מחדש</button>
                 <button mat-button (click)="saveDraw()" i18n>שמור להיסטוריה</button>
                 } @else {
-                    <button mat-button (click)="draw.generateTeams()" i18n>צור קבוצות</button>
+                    <button mat-button (click)="generateTeams()" i18n>צור קבוצות</button>
                 }
             </div>
 
-
-            <div class="teams-container">
+            <div [ngClass]="{'expand': showAnimation}" class="teams-container">
                 <app-draw-result [draw]="draw"></app-draw-result>
             </div>
 

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Draw } from '../draw';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 
 @Injectable({
@@ -10,10 +10,22 @@ import { environment } from '../../../environments/environment.development';
 export class DrawService {
   private readonly http = inject(HttpClient);
   private readonly _draw = new Draw();
+  private _drawChange = new BehaviorSubject<Draw>(this._draw);
+  
   public get draw(): Draw {
     return this._draw;
   }
+  
+  public get drawChange(): Observable<Draw> {
+    return this._drawChange.asObservable();
+  }
+  
   constructor() { }
+
+  public generateDraw(): void {
+    this.draw.generateTeams();
+    this._drawChange.next(this._draw);
+  }
 
   saveDraw(): Observable<any> {
     const body = this.transformToFirestoreFormat(this.draw);
