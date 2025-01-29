@@ -4,7 +4,7 @@
         <div class="pt-2">
             <app-lineup [draw]="draw"></app-lineup>
         </div>
-      
+
         <div>
             <button mat-button matStepperNext i18n>הבא</button>
         </div>
@@ -16,7 +16,7 @@
                 <mat-label i18n>מספר קבוצות</mat-label>
                 <input matInput type="number" placeholder="מספר קבוצות" [(ngModel)]="draw.numberOfTeams" required>
             </mat-form-field>
-    
+
             <mat-form-field>
                 <mat-label i18n>מספר הרצות</mat-label>
                 <input matInput type="number" placeholder="מספר הרצות" [(ngModel)]="draw.numberOfRepetitions" required>
@@ -35,9 +35,12 @@
         }
         <div class="pt-2">
             <div class="draw-buttons">
-                <button mat-button (click)="draw.generateTeams()" i18n>צור קבוצות</button>
+
                 @if(draw.teams.length > 0){
+                <button mat-button (click)="draw.generateTeams()" i18n>צור קבוצות</button>
                 <button mat-button (click)="saveDraw()" i18n>שמור להיסטוריה</button>
+                } @else {
+                    <button mat-button (click)="draw.generateTeams()" i18n>צור קבוצות מחדש</button>
                 }
             </div>
 
