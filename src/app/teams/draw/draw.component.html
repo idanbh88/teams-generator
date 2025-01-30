@@ -1,0 +1,17 @@
+<div class="draw-container" cdkDropListGroup>
+    @for(team of draw()?.teams; track team ){
+        <div [style.width.%]="100 / draw()!.numberOfTeams" class="team-container">
+            <div class="team-header">{{ team.name}}</div>
+            <div cdkDropList [cdkDropListData]="team.getPlayers()" class="draw-list" (cdkDropListDropped)="drop($event)">
+                @for (item of team.getPlayers(); track item) {
+                <div class="draw-box" cdkDrag>
+                    {{item.name}}
+                </div>
+                }
+                <div [cdkDragDisabled]="true" class="draw-box" cdkDrag>
+                    {{team.getSkillLevelSum()}}
+                </div>
+            </div>
+        </div>
+    }
+</div>

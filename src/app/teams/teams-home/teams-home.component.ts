@@ -12,6 +12,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
+import { DrawComponent } from "../draw/draw.component";
 
 @Component({
   selector: 'app-teams-home',
@@ -26,8 +27,9 @@ import { CommonModule } from '@angular/common';
     DrawResultComponent,
     MatProgressBarModule,
     MatSnackBarModule,
-    CommonModule 
-  ],
+    CommonModule,
+    DrawComponent
+],
   templateUrl: './teams-home.component.html',
   styleUrl: './teams-home.component.scss'
 })

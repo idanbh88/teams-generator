@@ -12,7 +12,6 @@ export class Team{
     public addPlayer(player: Player){
         this.players.push(player);
         this.skillLevelSum += player.skillLevel;
-        // round to 2 decimal places
         this.skillLevelSum = Math.round(this.skillLevelSum * 100) / 100;
     }
 
@@ -22,5 +21,10 @@ export class Team{
 
     public getPlayers(){
         return this.players;
+    }
+
+    public update(){
+       this.skillLevelSum = this.players.reduce((sum, player) => sum + player.skillLevel, 0);
+       this.skillLevelSum = Math.round(this.skillLevelSum * 100) / 100;
     }
 }
