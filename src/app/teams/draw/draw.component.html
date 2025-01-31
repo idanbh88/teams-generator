@@ -6,6 +6,9 @@
                 @for (item of team.getPlayers(); track item) {
                 <div class="draw-box" cdkDrag>
                     {{item.name}}
+                    @if(displaySkillLevel()){
+                        <span class="skill-level">{{item.skillLevel}}</span>
+                      }
                 </div>
                 }
                 <div [cdkDragDisabled]="true" class="draw-box footer" cdkDrag>

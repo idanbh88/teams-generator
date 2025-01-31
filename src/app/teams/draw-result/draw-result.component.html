@@ -3,7 +3,12 @@
         @for (column of displayedColumns; track column) {
           <ng-container [matColumnDef]="column">
             <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-            <td mat-cell *matCellDef="let element"> {{element[column]?.name}} </td>
+            <td mat-cell *matCellDef="let element"> 
+              {{element[column]?.name}} 
+              @if(displaySkillLevel()){
+                <span class="skill-level">{{element[column]?.skillLevel}}</span>
+              }
+            </td>
             <td mat-footer-cell *matFooterCellDef> {{ draw()!.getTeamByName(column)?.getSkillLevelSum() }} </td>
           </ng-container>
         }

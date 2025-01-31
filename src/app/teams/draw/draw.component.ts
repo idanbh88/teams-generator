@@ -18,6 +18,7 @@ import { Player } from '../../core/models/player.model';
 })
 export class DrawComponent {
    public draw = input<Draw>();
+   public displaySkillLevel = input<boolean>(true);
    
   drop(event: CdkDragDrop<Player[]>) {
     if (event.previousContainer === event.container) {

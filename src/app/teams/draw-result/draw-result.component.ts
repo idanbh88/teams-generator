@@ -15,7 +15,8 @@ import {MatButtonModule} from '@angular/material/button';
 export class DrawResultComponent implements AfterViewInit{
 
   public draw = input<Draw>();
-  
+  public displaySkillLevel = input<boolean>(true);
+
   public  get displayedColumns(): string[] {
     if(!this.draw() || !this.draw()?.teams ) {
       return [];

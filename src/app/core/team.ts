@@ -27,4 +27,11 @@ export class Team{
        this.skillLevelSum = this.players.reduce((sum, player) => sum + player.skillLevel, 0);
        this.skillLevelSum = Math.round(this.skillLevelSum * 100) / 100;
     }
+
+    public toPlainObject(): any {
+        return {
+          name: this.name,
+          players: this.players
+        };
+    }
 }

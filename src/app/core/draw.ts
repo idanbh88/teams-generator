@@ -112,4 +112,12 @@ export class Draw {
         }
         return undefined;
     }
+
+    public toPlainObject(): any {
+        return {
+          numberOfRepetitions: this.numberOfRepetitions,
+          numberOfTeams: this.numberOfTeams,
+          teams: this.teams.map(team => team.toPlainObject())
+        };
+      }
 }
