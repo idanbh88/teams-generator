@@ -16,14 +16,14 @@
       </mat-form-field>
 
       <h5 class="players-amount">
-        {{draw()?.players?.length}} שחקנים
+        {{draw()?.lineup?.length}} שחקנים
       </h5>
 </div>
 
 
   <mat-chip-grid #reactiveChipGrid aria-label="Enter reactive form keywords" [formControl]="lineupControl">
-    @for (player of draw()?.players; track player) {
-      <mat-chip-row (removed)="draw()?.removePlayer(player)">
+    @for (player of draw()?.lineup; track player) {
+      <mat-chip-row (removed)="remove(player)">
         {{player.name}}
       <button matChipRemove>
         <mat-icon>cancel</mat-icon>

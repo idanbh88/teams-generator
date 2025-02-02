@@ -150,11 +150,22 @@ $app-tertiary: mat.$blue-palette;
 @include create-theme($app-primary, $app-tertiary);
 
 .edit-player .mat-mdc-form-field-infix {
-    width: auto !important; 
+    width: auto !important;
     min-width: 80px;
- }
+}
 
- .edit-player-skill .mat-mdc-form-field-infix {
-    width: auto !important; 
+.edit-player-skill .mat-mdc-form-field-infix {
+    width: auto !important;
     min-width: 40px;
- }
+}
+
+@media (max-width: 600px) {
+    .draw-stepper {
+        .mat-step:last-child {
+            .mat-vertical-content-container {
+                margin: 0 !important;
+            }
+        }
+    }
+
+}

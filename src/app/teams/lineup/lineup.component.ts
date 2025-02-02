@@ -8,10 +8,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Player } from '../../core/models/player.model';
 import { PlayerService } from '../../core/services/player.service';
-import { Draw } from '../../core/draw';
 import {MatButtonModule} from '@angular/material/button';
 import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
+import { Draw } from '../../core/models/draw.model';
 
 @Component({
   selector: 'app-lineup',
@@ -46,7 +46,7 @@ export class LineupComponent implements OnInit {
         debounceTime(300),
         map(value =>{ 
           return this.options
-          .filter(option => !this.draw()?.players.includes(option))
+          .filter(option => !this.draw()?.lineup.includes(option))
           .filter(option => option.name.toLowerCase().includes((value ? value : '').toLowerCase()))
           .sort((a, b) => a.name.localeCompare(b.name));
         }),
@@ -56,8 +56,15 @@ export class LineupComponent implements OnInit {
   }
 
   selected(event: any): void {
-    this.draw()?.addPlayer(event.option.value);
+    this.draw()?.lineup.push(event.option.value);
     event.option.deselect();
     this.control.setValue('');
+  }
+
+  remove(player: Player): void {
+    const lineup = this.draw()?.lineup;
+    if (lineup) {
+      this.draw()!.lineup = lineup.filter(p => p !== player);
+    }
   }
 }

@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import {
   CdkDragDrop,
   CdkDrag,
@@ -7,8 +7,9 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { Draw } from '../../core/draw';
 import { Player } from '../../core/models/player.model';
+import { Draw } from '../../core/models/draw.model';
+import { TeamService } from '../../core/services/team.service';
 
 @Component({
   selector: 'app-draw',
@@ -17,9 +18,11 @@ import { Player } from '../../core/models/player.model';
   styleUrl: './draw.component.scss'
 })
 export class DrawComponent {
-   public draw = input<Draw>();
-   public displaySkillLevel = input<boolean>(true);
-   
+  private teamService = inject(TeamService);
+  public draw = input<Draw>();
+  public displaySkillLevel = input<boolean>(true);
+
+
   drop(event: CdkDragDrop<Player[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -32,7 +35,7 @@ export class DrawComponent {
       );
 
       this.draw()?.teams.forEach((team) => {
-        team.update();
+        this.teamService.reCalculateSkillLevelSum(team);
       });
     }
   }

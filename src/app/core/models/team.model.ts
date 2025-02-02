@@ -1,6 +1,7 @@
 import { Player } from "./player.model";
 
-export interface team {
+export interface Team {
     name: string;
     players: Player[];
+    skillLevelSum: number;
 }

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DrawResultComponent } from './draw-result.component';
+import { DrawSettingsComponent } from './draw-settings.component';
 
-describe('DrawResultComponent', () => {
-  let component: DrawResultComponent;
-  let fixture: ComponentFixture<DrawResultComponent>;
+describe('DrawSettingsComponent', () => {
+  let component: DrawSettingsComponent;
+  let fixture: ComponentFixture<DrawSettingsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DrawResultComponent]
+      imports: [DrawSettingsComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DrawResultComponent);
+    fixture = TestBed.createComponent(DrawSettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -5,14 +5,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatStepperModule } from '@angular/material/stepper';
 import { LineupComponent } from "../lineup/lineup.component";
-import { Draw } from '../../core/draw';
 import { DrawService } from '../../core/services/draw.service';
-import { DrawResultComponent } from "../draw-result/draw-result.component";
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { DrawComponent } from "../draw/draw.component";
+import { Draw } from '../../core/models/draw.model';
+import { DrawSettingsComponent } from "../draw-settings/draw-settings.component";
 
 @Component({
   selector: 'app-teams-home',
@@ -24,11 +23,11 @@ import { DrawComponent } from "../draw/draw.component";
     MatInputModule,
     MatButtonModule,
     LineupComponent,
-    DrawResultComponent,
     MatProgressBarModule,
     MatSnackBarModule,
     CommonModule,
-    DrawComponent
+    DrawComponent,
+    DrawSettingsComponent
 ],
   templateUrl: './teams-home.component.html',
   styleUrl: './teams-home.component.scss'
