@@ -45,7 +45,7 @@ export class DrawService {
   private getNextGameDate(): Date {
     const date = new Date();
     const day = date.getDay();
-    if (day >= 1 && day <= 5) {
+    if (day >= 2 && day <= 5) {
       const nextFriday = new Date();
       nextFriday.setDate(date.getDate() + (5 - day));
       nextFriday.setHours(16, 0, 0, 0);
