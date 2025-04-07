@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TeamsHomeComponent } from './teams-home.component';
+import { ActionValidatorComponent } from './action-validator.component';
 
-describe('TeamsHomeComponent', () => {
-  let component: TeamsHomeComponent;
-  let fixture: ComponentFixture<TeamsHomeComponent>;
+describe('ActionValidatorComponent', () => {
+  let component: ActionValidatorComponent;
+  let fixture: ComponentFixture<ActionValidatorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TeamsHomeComponent]
+      imports: [ActionValidatorComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TeamsHomeComponent);
+    fixture = TestBed.createComponent(ActionValidatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

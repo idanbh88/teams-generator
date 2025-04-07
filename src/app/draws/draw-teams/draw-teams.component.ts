@@ -12,13 +12,13 @@ import { Draw } from '../../core/models/draw.model';
 import { TeamService } from '../../core/services/team.service';
 
 @Component({
-  selector: 'app-draw',
+  selector: 'app-draw-teams',
   imports: [CdkDropListGroup, CdkDropList, CdkDrag],
-  templateUrl: './draw.component.html',
-  styleUrl: './draw.component.scss'
+  templateUrl: './draw-teams.component.html',
+  styleUrl: './draw-teams.component.scss'
 })
-export class DrawComponent {
-  private teamService = inject(TeamService);
+export class DrawTeamsComponent {
+private teamService = inject(TeamService);
   public draw = input<Draw>();
   public displaySkillLevel = input<boolean>(true);
 

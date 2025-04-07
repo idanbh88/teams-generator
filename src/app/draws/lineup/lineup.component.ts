@@ -46,7 +46,7 @@ export class LineupComponent implements OnInit {
         debounceTime(300),
         map(value =>{ 
           return this.options
-          .filter(option => !this.draw()?.lineup.includes(option))
+          .filter(option => !this.draw()?.lineup?.map(o=> o.id).includes(option.id))
           .filter(option => option.name.toLowerCase().includes((value ? value : '').toLowerCase()))
           .sort((a, b) => a.name.localeCompare(b.name));
         }),
@@ -56,7 +56,7 @@ export class LineupComponent implements OnInit {
   }
 
   selected(event: any): void {
-    this.draw()?.lineup.push(event.option.value);
+    this.draw()?.lineup?.push(event.option.value);
     event.option.deselect();
     this.control.setValue('');
   }
