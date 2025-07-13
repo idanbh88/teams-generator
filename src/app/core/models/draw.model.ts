@@ -9,4 +9,5 @@ export interface Draw{
     lineup?: Player[];
     name?: string;
     time?: Date;
+    playersInTier?: number;
 }

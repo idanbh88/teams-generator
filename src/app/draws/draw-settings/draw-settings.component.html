@@ -1,18 +1,29 @@
-@if(draw()){
+@if(draw){
     <div class="draw-settings pt-2">
         <mat-form-field>
             <mat-label i18n>מספר קבוצות</mat-label>
-            <input matInput type="number" placeholder="מספר קבוצות" [(ngModel)]="draw()!.numberOfTeams" required>
+            <input matInput type="number" placeholder="מספר קבוצות" [(ngModel)]="draw!.numberOfTeams" required>
         </mat-form-field>
     
+          <mat-form-field>
+            <mat-label i18n>מספר שחקנים בדרג</mat-label>
+            <mat-select [(ngModel)]="draw!.playersInTier" required>
+              @for( option of tierSizeOptions; track option) {
+                <mat-option [value]="option">
+                  {{ option }}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
         <mat-form-field>
             <mat-label i18n>מספר הרצות</mat-label>
-            <input matInput type="number" placeholder="מספר הרצות" [(ngModel)]="draw()!.numberOfRepetitions" required>
+            <input matInput type="number" placeholder="מספר הרצות" [(ngModel)]="draw!.numberOfRepetitions" required>
         </mat-form-field>
 
         <mat-form-field>
             <mat-label i18n>תאריך</mat-label>
-            <input matInput [matDatepicker]="datepicker" [(ngModel)]="draw()!.time">
+            <input matInput [matDatepicker]="datepicker" [(ngModel)]="draw!.time">
             <mat-datepicker #datepicker/>
             <mat-datepicker-toggle [for]="datepicker" matSuffix/>
           </mat-form-field>
@@ -21,7 +32,7 @@
             <mat-label i18n>שעה</mat-label>
             <input matInput
               [matTimepicker]="timepicker"
-              [(ngModel)]="draw()!.time"
+              [(ngModel)]="draw!.time"
               [ngModelOptions]="{updateOn: 'blur'}">
             <mat-timepicker #timepicker/>
             <mat-timepicker-toggle [for]="timepicker" matSuffix/>

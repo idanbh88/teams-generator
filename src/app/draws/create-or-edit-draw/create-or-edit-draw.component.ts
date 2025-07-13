@@ -87,6 +87,6 @@ export class CreateOrEditDrawComponent implements OnInit {
     setTimeout(() => {
       this.showAnimation = false;
     }, 1000);
-
+    this.saveDraw();
   }
 }

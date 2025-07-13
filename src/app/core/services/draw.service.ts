@@ -201,7 +201,7 @@ export class DrawService {
     draw.teams = currentTeams;
   }
 
-  private generateTeamsBase(draw: Draw): Team[] {
+  private generateTeamsBaseDeprecated(draw: Draw): Team[] {
     const groupSize = Math.floor(draw.lineup!.length / draw.numberOfTeams);
     const groups: Player[][] = [];
 
@@ -239,4 +239,47 @@ export class DrawService {
 
     return teams;
   }
+
+  private generateTeamsBase(draw: Draw): Team[] {
+    // Use numberOfTiers instead of groupSize
+    const tierSize =  draw.playersInTier || draw.numberOfTeams;;
+    const numberOfTiers = draw.lineup!.length / tierSize;
+    const sortedPlayers = draw.lineup!.sort((a, b) => b.skillLevel - a.skillLevel);
+
+    // Create tiers
+    const tiers: Player[][] = [];
+    for (let i = 0; i < numberOfTiers; i++) {
+      tiers.push(sortedPlayers.slice(i * tierSize, (i + 1) * tierSize));
+    }
+
+    // Create teams
+    const teams: Team[] = [];
+    for (let i = 0; i < draw.numberOfTeams; i++) {
+      teams.push({ name: `קבוצה ${i + 1}`, players: [], skillLevelSum: 0 });
+    }
+
+    // Distribute players from tiers to teams (can be randomized or sequential)
+    for (const tier of tiers) {
+      const shuffledTier = this.shuffleArray(tier);
+      let teamIndex = 0;
+      for (const player of shuffledTier) {
+        this.teamService.addPlayer(teams[teamIndex++ % teams.length], player);
+      }
+    }
+
+    // sort all players in each team by skill level
+    for (const team of teams) {
+      team.players.sort((a, b) => b.skillLevel - a.skillLevel);
+    }
+    return teams;
+  }
+
+  private shuffleArray<T>(array: T[]): T[] {
+  const arr = array.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
 }
