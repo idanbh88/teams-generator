@@ -1,4 +1,4 @@
-import { Component, Input, input } from '@angular/core';
+import { AfterViewInit, Component, Input, input } from '@angular/core';
 import { Draw } from '../../core/models/draw.model';
 import { FormsModule } from '@angular/forms';
 import { MatTimepickerModule } from '@angular/material/timepicker';
@@ -18,11 +18,17 @@ import { MatSelectModule } from '@angular/material/select';
     FormsModule,
     MatOption,
     MatSelectModule
-],
+  ],
   templateUrl: './draw-settings.component.html',
   styleUrl: './draw-settings.component.scss'
 })
-export class DrawSettingsComponent {
+export class DrawSettingsComponent implements AfterViewInit {
+  ngAfterViewInit(): void {
+    if (this.draw && (this.draw.playersInTier == null || this.draw.playersInTier === undefined)) {
+      this.draw.playersInTier = this.draw.numberOfTeams;
+    }
+    this.setTierSizeOptions();
+  }
   private _draw?: Draw;
 
   @Input()
@@ -30,15 +36,8 @@ export class DrawSettingsComponent {
     if (value && (value.playersInTier == null || value.playersInTier === undefined)) {
       value.playersInTier = value.numberOfTeams;
     }
-    this.tierSizeOptions = [];
-    if (value && value.lineup) {
-      let n = value.numberOfTeams;
-      while (n <= value.lineup.length / 2 ) {
-        this.tierSizeOptions.push(n);
-        n *= 2;
-      }
-    }
     this._draw = value;
+    this.setTierSizeOptions();
   }
 
   get draw(): Draw | undefined {
@@ -46,4 +45,15 @@ export class DrawSettingsComponent {
   }
 
   public tierSizeOptions: number[] = [];
+
+  private setTierSizeOptions(): void {
+    this.tierSizeOptions = [];
+    if (this.draw && this.draw.lineup) {
+      let n = this.draw.numberOfTeams;
+      while (n <= this.draw.lineup.length / 2) {
+        this.tierSizeOptions.push(n);
+        n *= 2;
+      }
+    }
+  }
 }

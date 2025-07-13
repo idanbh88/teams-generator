@@ -138,6 +138,7 @@ export class DrawService {
       teams: [],
       numberOfTeams: 3,
       numberOfRepetitions: 3,
+      playersInTier: 3,
       name: date.toLocaleDateString(),
       time: date
     }
