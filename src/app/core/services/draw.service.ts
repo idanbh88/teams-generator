@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, EventEmitter } from '@angular/core';
 import { Draw } from '../models/draw.model';
 import { Player } from '../models/player.model';
 import { Team } from '../models/team.model';
@@ -18,6 +18,8 @@ export class DrawService {
   public currentDraws$: Observable<{ items: Draw[], totalCount: number }>;
   private _pageSize = new BehaviorSubject<number>(10);
   private _pageIndex = new BehaviorSubject<number>(0);
+
+  public drawModified: EventEmitter<Draw> = new EventEmitter();
 
   public set pageSize(value: number) {
     this._pageSize.next(value);
@@ -96,7 +98,9 @@ export class DrawService {
 
     return from(addDoc(ref, draw)).pipe(
       map(docRef => {
-        return { ...draw, id: docRef.id };
+        const createdDraw = { ...draw, id: docRef.id };
+        this.drawModified.emit(createdDraw);
+        return createdDraw;
       })
     );
   }
@@ -108,7 +112,9 @@ export class DrawService {
 
   updateDraw(draw: Draw): Observable<void> {
     const itemRef = doc(this.firestore, `draws/${draw.id}`); // Reference to document
-    return from(updateDoc(itemRef, draw as any)); // Convert to Observable
+    return from(updateDoc(itemRef, draw as any)).pipe(
+      tap(() => this.drawModified.emit(draw))
+    ); // Convert to Observable
   }
 
   getDraw(id: string): Observable<Draw> {
@@ -168,6 +174,7 @@ export class DrawService {
 
   public addPlayer(draw: Draw, player: Player) {
     draw.lineup!.push(player);
+    this.drawModified.emit(draw);
   }
 
   public removePlayer(draw: Draw, player: Player) {
@@ -243,7 +250,7 @@ export class DrawService {
 
   private generateTeamsBase(draw: Draw): Team[] {
     // Use numberOfTiers instead of groupSize
-    const tierSize =  draw.playersInTier || draw.numberOfTeams;;
+    const tierSize = draw.playersInTier || draw.numberOfTeams;;
     const numberOfTiers = draw.lineup!.length / tierSize;
     const sortedPlayers = draw.lineup!.sort((a, b) => b.skillLevel - a.skillLevel);
 
@@ -276,11 +283,11 @@ export class DrawService {
   }
 
   private shuffleArray<T>(array: T[]): T[] {
-  const arr = array.slice();
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
+    const arr = array.slice();
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
   }
-  return arr;
-}
 }

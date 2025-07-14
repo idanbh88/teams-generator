@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, Input, input } from '@angular/core';
+import { AfterViewInit, Component, inject, Input, input, OnDestroy } from '@angular/core';
+import { DrawService } from '../../core/services/draw.service';
 import { Draw } from '../../core/models/draw.model';
 import { FormsModule } from '@angular/forms';
 import { MatTimepickerModule } from '@angular/material/timepicker';
@@ -7,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter, MatOption } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-draw-settings',
@@ -22,12 +24,31 @@ import { MatSelectModule } from '@angular/material/select';
   templateUrl: './draw-settings.component.html',
   styleUrl: './draw-settings.component.scss'
 })
-export class DrawSettingsComponent implements AfterViewInit {
+export class DrawSettingsComponent implements AfterViewInit, OnDestroy {
+  private drawModifiedSubscription?: any;
+  private drawService = inject(DrawService);
+  constructor() {}
+
   ngAfterViewInit(): void {
     if (this.draw && (this.draw.playersInTier == null || this.draw.playersInTier === undefined)) {
       this.draw.playersInTier = this.draw.numberOfTeams;
     }
     this.setTierSizeOptions();
+    this.drawModifiedSubscription = this.drawService.drawModified
+    .pipe(
+      filter((d) => {
+        return d.id === this.draw?.id;
+      })
+    )
+    .subscribe(() => {
+      this.setTierSizeOptions();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.drawModifiedSubscription) {
+      this.drawModifiedSubscription.unsubscribe();
+    }
   }
   private _draw?: Draw;
 

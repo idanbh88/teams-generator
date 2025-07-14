@@ -12,6 +12,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatChipInputEvent, MatChipsModule} from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { Draw } from '../../core/models/draw.model';
+import { DrawService } from '../../core/services/draw.service';
 
 @Component({
   selector: 'app-lineup',
@@ -31,7 +32,8 @@ import { Draw } from '../../core/models/draw.model';
 })
 export class LineupComponent implements OnInit {
 
-  private playerService = inject(PlayerService);
+  private readonly drawService = inject(DrawService);
+  private readonly playerService = inject(PlayerService);
   control = new FormControl('');
   lineupControl = new FormControl('');
   options: Player[] = [];
@@ -56,7 +58,10 @@ export class LineupComponent implements OnInit {
   }
 
   selected(event: any): void {
-    this.draw()?.lineup?.push(event.option.value);
+    if(!this.draw()) {
+      return;
+    }
+    this.drawService.addPlayer(this.draw()!,event.option.value);
     event.option.deselect();
     this.control.setValue('');
   }
